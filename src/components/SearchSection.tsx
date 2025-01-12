@@ -142,11 +142,10 @@ export const SearchSection = ({ config }: SearchSectionProps) => {
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.role === 'user'
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white bg-opacity-10 text-white'
-                  }`}
+                  className={`max-w-[80%] rounded-lg p-3 ${message.role === 'user'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white bg-opacity-10 text-white'
+                    }`}
                 >
                   {message.content}
                 </div>
