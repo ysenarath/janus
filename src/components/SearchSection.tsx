@@ -124,6 +124,7 @@ export const SearchSection = ({ config }: SearchSectionProps) => {
                 <form onSubmit={handleSubmit} className="relative w-full">
                     <input
                         ref={inputRef}
+                        id="searchInput"
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
