@@ -10,6 +10,7 @@ Your Gateway to a Purposeful Web - A modern, customizable new tab page for Chrom
 - Quick links management
 - Time display
 - Inspirational quotes
+- AI-powered assistance
 - Clean, minimal interface
 
 ## Prerequisites
