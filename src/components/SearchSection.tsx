@@ -127,6 +127,7 @@ export const SearchSection = ({ config }: SearchSectionProps) => {
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
+                        id="searchInput"
                         className={`search-input w-full ${isChatMode ? 'bg-opacity-10' : ''}`}
                         placeholder={isChatMode ? "Chat with AI..." : "Search Brave..."}
                         autoComplete="off"
