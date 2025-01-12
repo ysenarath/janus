@@ -33,19 +33,18 @@ export const SearchSection = ({ config }: SearchSectionProps) => {
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (document.activeElement?.tagName !== 'INPUT') {
-        if (e.key === '/') {
-          e.preventDefault();
-          setIsChatMode(false);
-          inputRef.current?.focus();
-        } else if (e.key === 'Tab' && config.chatEnabled) {
-          e.preventDefault();
-          setIsChatMode(true);
-          inputRef.current?.focus();
-        }
+      if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') {
+        e.preventDefault();
+        setIsChatMode(false);
+        inputRef.current?.focus();
       } else if (e.key === 'Tab' && config.chatEnabled) {
         e.preventDefault();
-        setIsChatMode(prev => !prev);
+        if (document.activeElement?.tagName !== 'INPUT') {
+          setIsChatMode(true);
+          inputRef.current?.focus();
+        } else {
+          setIsChatMode(prev => !prev);
+        }
       }
     };
 
@@ -53,8 +52,16 @@ export const SearchSection = ({ config }: SearchSectionProps) => {
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [config.chatEnabled]);
 
+  // Keep focus on input after messages update or loading state changes
+  useEffect(() => {
+    if (isChatMode) {
+      inputRef.current?.focus();
+    }
+  }, [messages, isLoading, isChatMode]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (!input.trim()) return;
 
     if (!isChatMode) {
