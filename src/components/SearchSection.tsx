@@ -95,6 +95,7 @@ export const SearchSection = ({ config }: SearchSectionProps) => {
                         'X-Title': 'Janus',
                         'Content-Type': 'application/json'
                     },
+                    timeout: 30000, // 30 second timeout
                 }
             );
 
@@ -105,9 +106,28 @@ export const SearchSection = ({ config }: SearchSectionProps) => {
             const assistantMessage = response.data.choices[0].message.content;
             setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }]);
         } catch (error) {
-            const errorMessage = axios.isAxiosError(error) && error.response?.data?.error?.message
-                ? error.response.data.error.message
-                : 'Sorry, I encountered an error. Please try again.';
+            let errorMessage = 'Sorry, I encountered an error. Please try again.';
+            
+            if (axios.isAxiosError(error)) {
+                if (error.response?.status === 401) {
+                    errorMessage = 'Authentication failed. Please check your API key.';
+                } else if (error.response?.status === 429) {
+                    errorMessage = 'Rate limit exceeded. Please wait a moment before trying again.';
+                } else if (error.response?.data?.error?.message) {
+                    errorMessage = error.response.data.error.message;
+                } else if (error.code === 'ECONNABORTED') {
+                    errorMessage = 'Request timed out. Please check your internet connection.';
+                } else if (!error.response) {
+                    errorMessage = 'Network error. Please check your internet connection.';
+                }
+                
+                // Log error for debugging
+                console.error('Chat API Error:', {
+                    status: error.response?.status,
+                    data: error.response?.data,
+                    message: error.message
+                });
+            }
 
             setMessages(prev => [...prev, {
                 role: 'assistant',

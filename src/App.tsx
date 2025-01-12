@@ -4,6 +4,8 @@ import { SearchSection } from './components/SearchSection';
 import { QuickLinks } from './components/QuickLinks';
 import { QuoteSection } from './components/QuoteSection';
 import { ConfigModal } from './components/ConfigModal';
+import ASR from './components/ASR';
+
 
 export const App = () => {
     const [isConfigOpen, setIsConfigOpen] = useState(false);
@@ -109,6 +111,10 @@ export const App = () => {
                     config={config}
                     onSave={handleConfigSave}
                 />
+            )}
+
+            {config.chatEnabled && (
+                <ASR />
             )}
         </div>
     );
