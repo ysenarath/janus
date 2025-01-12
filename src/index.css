@@ -4,7 +4,7 @@
 
 @layer components {
   .search-input {
-    @apply w-[550px] p-4 text-lg border-none rounded-full bg-white/20 backdrop-blur-lg text-white transition-all duration-300;
+    @apply w-[550px] pl-6 pr-44 py-4 text-lg border-none rounded-full bg-white/20 backdrop-blur-lg text-white transition-all duration-300;
   }
   
   .search-input::placeholder {

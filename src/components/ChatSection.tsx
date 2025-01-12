@@ -99,10 +99,10 @@ export const ChatSection = ({ config }: ChatSectionProps) => {
     };
 
     return (
-        <div className="fixed bottom-4 right-4 w-96 bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="h-96 flex flex-col">
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                    {messages.map((message, index) => (
+        <div className="w-96 bg-black bg-opacity-20 backdrop-blur-sm rounded-lg overflow-hidden text-left">
+            <div className="h-[28rem] flex flex-col">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col-reverse">
+                    {[...messages].reverse().map((message, index) => (
                         <div
                             key={index}
                             className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
@@ -110,7 +110,7 @@ export const ChatSection = ({ config }: ChatSectionProps) => {
                             <div
                                 className={`max-w-[80%] rounded-lg p-3 ${message.role === 'user'
                                     ? 'bg-blue-500 text-white'
-                                    : 'bg-gray-100 text-black'
+                                    : 'bg-white bg-opacity-10 text-white'
                                     }`}
                             >
                                 {message.content}
@@ -119,7 +119,7 @@ export const ChatSection = ({ config }: ChatSectionProps) => {
                     ))}
                     {isLoading && (
                         <div className="flex justify-start">
-                            <div className="bg-gray-100 rounded-lg p-3 animate-pulse">
+                            <div className="bg-white bg-opacity-10 text-white rounded-lg p-3 animate-pulse">
                                 Thinking...
                             </div>
                         </div>
@@ -127,14 +127,14 @@ export const ChatSection = ({ config }: ChatSectionProps) => {
                     <div ref={messagesEndRef} />
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-4 border-t">
+                <form onSubmit={handleSubmit} className="p-4 border-t border-white border-opacity-10">
                     <div className="flex gap-2">
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Type a message..."
-                            className="flex-1 p-2 border rounded"
+                            className="flex-1 p-2 rounded bg-white bg-opacity-10 text-white border-none placeholder-white placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             disabled={isLoading}
                         />
                         <button

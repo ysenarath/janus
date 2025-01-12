@@ -4,7 +4,6 @@ import { SearchSection } from './components/SearchSection';
 import { QuickLinks } from './components/QuickLinks';
 import { QuoteSection } from './components/QuoteSection';
 import { ConfigModal } from './components/ConfigModal';
-import { ChatSection } from './components/ChatSection';
 
 export const App = () => {
     const [isConfigOpen, setIsConfigOpen] = useState(false);
@@ -73,7 +72,7 @@ export const App = () => {
                     backgroundBlendMode: 'overlay'
                 }}
             >
-                <div className="relative text-center p-8 text-white">
+                <div className="relative text-center p-8 text-white space-y-8">
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
@@ -87,22 +86,21 @@ export const App = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </button>
-                    <TimeSection />
-                    <SearchSection />
-                    <QuickLinks />
-                    {config.showQuotes && <QuoteSection quotes={config.quotes} />}
+                    <div className="space-y-8">
+                        <TimeSection />
+                        <SearchSection
+                            config={{
+                                chatEnabled: config.chatEnabled,
+                                chatApiEndpoint: config.chatApiEndpoint,
+                                chatApiKey: config.chatApiKey,
+                                chatModel: config.chatModel
+                            }}
+                        />
+                        <QuickLinks />
+                        {config.showQuotes && <QuoteSection quotes={config.quotes} />}
+                    </div>
                 </div>
             </div>
-
-            {config.chatEnabled && (
-                <ChatSection
-                    config={{
-                        apiEndpoint: config.chatApiEndpoint,
-                        apiKey: config.chatApiKey,
-                        model: config.chatModel
-                    }}
-                />
-            )}
 
             {isConfigOpen && (
                 <ConfigModal
