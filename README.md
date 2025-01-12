@@ -2,6 +2,8 @@
 
 Your Gateway to a Purposeful Web - A modern, customizable new tab page for Chrome built with React, TypeScript, and Tailwind CSS.
 
+![Screenshot of Janus](screenshot.png)
+
 ## Features
 
 - Custom search functionality
