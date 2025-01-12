@@ -119,8 +119,38 @@ export const SearchSection = ({ config }: SearchSectionProps) => {
     };
 
     return (
-        <div className={`transition-all duration-300 min-h-[3.5rem] ${isChatMode ? 'h-[28rem]' : 'h-[3.5rem]'} max-w-2xl mx-auto px-4`}>
-            <div className="relative h-[3.5rem] flex items-center">
+        <div className={`transition-all duration-300 min-h-[3.5rem] ${isChatMode ? 'h-[28rem]' : 'h-[3.5rem]'} min-w-2xl max-w-2xl mx-auto px-4`}>
+            {isChatMode && (
+                <div className="bg-black bg-opacity-20 backdrop-blur-sm rounded-lg overflow-hidden my-[3rem]">
+                    <div className="h-[21rem] overflow-y-auto p-4 pt-8 space-y-4 flex flex-col">
+                        {messages.map((message, index) => (
+                            <div
+                                key={index}
+                                className={`flex ${message.role === 'user' ? 'justify-start' : 'justify-end'}`}
+                            >
+                                <div
+                                    className={`max-w-[60%] rounded-lg p-3 ${message.role === 'user'
+                                        ? 'bg-blue-500 text-white'
+                                        : 'bg-white bg-opacity-10 text-white'
+                                        }`}
+                                >
+                                    {message.content}
+                                </div>
+                            </div>
+                        ))}
+                        {isLoading && (
+                            <div className="flex justify-end">
+                                <div className="bg-white bg-opacity-10 text-white rounded-lg p-3 animate-pulse">
+                                    Thinking...
+                                </div>
+                            </div>
+                        )}
+                        <div ref={messagesEndRef} />
+                    </div>
+                </div>
+            )}
+
+            <div className="relative h-[3.5rem] flex items-center z-50">
                 <form onSubmit={handleSubmit} className="relative w-full">
                     <input
                         ref={inputRef}
@@ -140,36 +170,6 @@ export const SearchSection = ({ config }: SearchSectionProps) => {
                     )}
                 </form>
             </div>
-
-            {isChatMode && (
-                <div className="bg-black bg-opacity-20 backdrop-blur-sm rounded-lg overflow-hidden">
-                    <div className="h-[21rem] overflow-y-auto p-4 space-y-4 flex flex-col">
-                        {isLoading && (
-                            <div className="flex justify-start">
-                                <div className="bg-white bg-opacity-10 text-white rounded-lg p-3 animate-pulse">
-                                    Thinking...
-                                </div>
-                            </div>
-                        )}
-                        {[...messages].reverse().map((message, index) => (
-                            <div
-                                key={index}
-                                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                            >
-                                <div
-                                    className={`max-w-[80%] rounded-lg p-3 ${message.role === 'user'
-                                        ? 'bg-blue-500 text-white'
-                                        : 'bg-white bg-opacity-10 text-white'
-                                        }`}
-                                >
-                                    {message.content}
-                                </div>
-                            </div>
-                        ))}
-                        <div ref={messagesEndRef} />
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
